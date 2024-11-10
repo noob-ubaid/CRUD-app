@@ -1,9 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { listContext } from '../App'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Contact = () => {
     const {employeeList,setEmployeeList} = useContext(listContext)
+    const [isUpdate,setIsUpdate] = useState(false)
+    const {state} = useLocation();
+    const navigate = useNavigate();
+    console.log(state)
     const [formValue,setFormValue] = useState({
         name:"",
         number:"",
@@ -16,15 +20,29 @@ const Contact = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        setEmployeeList([...employeeList, formValue])
-        setFormValue({
+        if(!isUpdate){
+            setEmployeeList([...employeeList, formValue])
+            setFormValue({
             name:"",
             number:"",
             email:"",
         })
+        }else{
+            const updating = employeeList.map((item,index) =>{
+                return index === state?.ind ? { ...item, ...formValue } : item;
+            });
+            setEmployeeList(updating);
+            setIsUpdate(false)
+            navigate("/create");
+        }
     }
-    console.log(formValue)
-    const navigate = useNavigate();
+    useEffect(() => {
+        if(state.data){
+            setIsUpdate(true)
+            setFormValue({...state.data})
+        }
+    },[state.data])
+    console.log(employeeList)
   return (
    <div className='flex justify-center '>
     <div className='bg-gray-200 md:mx-0 md:mt-14 mt-10 h-fit mx-3 md:w-[430px] w-full rounded-sm'>

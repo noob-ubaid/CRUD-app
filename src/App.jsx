@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react'
 import './App.css'
-import Contact from './components/contact'
+import Contact from './components/Contact'
 import ContactList from './components/ContactList'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 const listContext = createContext()
