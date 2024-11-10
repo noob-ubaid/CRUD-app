@@ -7,7 +7,6 @@ const Contact = () => {
     const [isUpdate,setIsUpdate] = useState(false)
     const {state} = useLocation();
     const navigate = useNavigate();
-    console.log(state)
     const [formValue,setFormValue] = useState({
         name:"",
         number:"",
@@ -37,12 +36,13 @@ const Contact = () => {
         }
     }
     useEffect(() => {
-        if(state.data){
-            setIsUpdate(true)
-            setFormValue({...state.data})
+        if (state?.data) {
+          setIsUpdate(true);
+          setFormValue({ ...state?.data });
         }
-    },[state.data])
-    console.log(employeeList)
+      }, [state?.data]);
+    
+   
   return (
    <div className='flex justify-center '>
     <div className='bg-gray-200 md:mx-0 md:mt-14 mt-10 h-fit mx-3 md:w-[430px] w-full rounded-sm'>
